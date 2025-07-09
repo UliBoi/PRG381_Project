@@ -4,7 +4,7 @@
 
 This is a Java-based student wellness management system developed for the PRG381 module at Belgium Campus.
 
-## 🔧 Technologies Used
+## Technologies Used
 
 - **Java (JSP & Servlets)**
 - **PostgreSQL** (Database)
@@ -13,7 +13,7 @@ This is a Java-based student wellness management system developed for the PRG381
 - **Apache Tomcat** (Web Server)
 - **GitHub** (Version Control)
 
-## 👤 Group Member Role (Member 4 - Database Engineer & Integration)
+## Group Member Role (Member 4 - Database Engineer & Integration)
 
 - Designed and created the `users` table with:
   - `studentNumber`, `name`, `surname`, `email`, `phone`, `password`
@@ -22,5 +22,5 @@ This is a Java-based student wellness management system developed for the PRG381
 - Connected PostgreSQL to Java servlets using JDBC
 - Verified registration and login flow from frontend to backend
 
-## 🗃️ Folder Structure
+## Folder Structure
 
