@@ -15,6 +15,6 @@
         <h1>Register Page</h1>
         <hr>
         <br>
-        <h1>Welcome</h1>
+        <h1>Welcome to the page</h1>
     </body>
 </html>
