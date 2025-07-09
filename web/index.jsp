@@ -13,5 +13,8 @@
     </head>
     <body>
         <h1>Register Page</h1>
+        <hr>
+        <br>
+        <h1>Welcome</h1>
     </body>
 </html>
