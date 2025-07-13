@@ -23,6 +23,20 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String password = request.getParameter("password");
+        
+        // 🔍 Input validation
+if (student_number == null || student_number.trim().isEmpty() || student_number.length() != 9) {
+    out.println("<h3>Invalid student number</h3>");
+    return;
+}
+if (!email.matches("^[\\w-.]+@[\\w-]+\\.[a-z]{2,}$")) {
+    out.println("<h3>Invalid email format</h3>");
+    return;
+}
+if (!phone.matches("^\\d{10}$")) {
+    out.println("<h3>Phone number must be 10 digits</h3>");
+    return;
+}
 
         try (Connection conn = ConnectionProvider.getConnection()) {
             String hashedPassword = hashPassword(password);
