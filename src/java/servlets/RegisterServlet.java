@@ -17,13 +17,6 @@ public class RegisterServlet extends HttpServlet {
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-
-//        String student_number = request.getParameter("student_number");
-//        String name = request.getParameter("name");
-//        String surname = request.getParameter("surname");
-//        String email = request.getParameter("email");
-//        String phone = request.getParameter("phone");
-//        String password = request.getParameter("password");
         
         Student student = new Student(
         request.getParameter("student_number"),
