@@ -84,22 +84,32 @@
         <h2>Register New Student</h2>
         <form action="RegisterServlet" method="post">
             <label>Student Number:</label>
-            <input type="text" name="student_number" required>
+            <!-- Student Number -->
+            <input type="text" name="student_number" required minlength="6" maxlength="6" pattern="[0-9]+" title="Only numbers allowed, max 6 digits">
 
             <label>Name:</label>
-            <input type="text" name="name" required>
+            <!-- Name -->
+            <input type="text" name="name" required maxlength="30" pattern="[A-Za-z]+" title="Only letters allowed">
 
             <label>Surname:</label>
-            <input type="text" name="surname" required>
+            <!-- Surname -->
+            <input type="text" name="surname" required maxlength="30" pattern="[A-Za-z]+" title="Only letters allowed">
+
 
             <label>Email:</label>
-            <input type="email" name="email" required>
+            <!-- Email -->
+            <input type="email" name="email" required pattern="[a-zA-Z0-9._%+-]+@gmail\.com" title="Must be a valid Gmail address">
 
             <label>Phone:</label>
-            <input type="text" name="phone" required>
+            <!-- Phone -->
+            <input type="text" name="phone" required pattern="[0-9]{10}" title="Enter a valid 10-digit phone number">
+
 
             <label>Password:</label>
-            <input type="password" name="password" required>
+            <!-- Password -->
+            <input type="password" name="password" required minlength="8"
+            pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).+$"
+            title="At least 8 characters, including uppercase, lowercase, number, and symbol">
 
             <input type="submit" value="Register">
         </form>

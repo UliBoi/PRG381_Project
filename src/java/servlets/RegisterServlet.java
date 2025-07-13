@@ -17,13 +17,6 @@ public class RegisterServlet extends HttpServlet {
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-
-//        String student_number = request.getParameter("student_number");
-//        String name = request.getParameter("name");
-//        String surname = request.getParameter("surname");
-//        String email = request.getParameter("email");
-//        String phone = request.getParameter("phone");
-//        String password = request.getParameter("password");
         
         Student student = new Student(
         request.getParameter("student_number"),
@@ -33,7 +26,36 @@ public class RegisterServlet extends HttpServlet {
         request.getParameter("phone"),
         request.getParameter("password")
 );
+     String password = student.getPassword();
 
+    // Check if email ends with @gmail.com
+    if (!student.getEmail().endsWith("@gmail.com")) {
+        out.println("<h3>Error: Only Gmail addresses are allowed.</h3>");
+        return;
+    }
+
+    // Password strength validation
+    if (!password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$")) {
+        out.println("<h3>Error: Password must be at least 8 characters, include uppercase, lowercase, number, and special character.</h3>");
+        return;
+    }
+
+    // Phone number validation
+    if (!student.getPhone().matches("\\d{10}")) {
+        out.println("<h3>Error: Phone number must be exactly 10 digits.</h3>");
+        return;
+    }
+
+    // Name & surname validation
+    if (!student.getName().matches("[A-Za-z]{1,30}")) {
+        out.println("<h3>Error: Name must only contain letters and be less than 30 characters.</h3>");
+        return;
+    }
+
+    if (!student.getSurname().matches("[A-Za-z]{1,30}")) {
+        out.println("<h3>Error: Surname must only contain letters and be less than 30 characters.</h3>");
+        return;
+    }
         try (Connection conn = ConnectionProvider.getConnection()) {
             String hashedPassword = hashPassword(student.getPassword());
 
