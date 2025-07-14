@@ -17,69 +17,88 @@ public class RegisterServlet extends HttpServlet {
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        
+
         Student student = new Student(
-        request.getParameter("student_number"),
-        request.getParameter("name"),
-        request.getParameter("surname"),
-        request.getParameter("email"),
-        request.getParameter("phone"),
-        request.getParameter("password")
-);
-     String password = student.getPassword();
+                request.getParameter("student_number"),
+                request.getParameter("name"),
+                request.getParameter("surname"),
+                request.getParameter("email"),
+                request.getParameter("phone"),
+                request.getParameter("password")
+        );
 
-    // Check if email ends with @gmail.com
-    if (!student.getEmail().endsWith("@gmail.com")) {
-        out.println("<h3>Error: Only Gmail addresses are allowed.</h3>");
-        return;
-    }
+        String password = student.getPassword();
 
-    // Password strength validation
-    if (!password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$")) {
-        out.println("<h3>Error: Password must be at least 8 characters, include uppercase, lowercase, number, and special character.</h3>");
-        return;
-    }
+        // Gmail validation
+        if (!student.getEmail().endsWith("@gmail.com")) {
+            renderResponse(out, false, "Only Gmail addresses are allowed.");
+            return;
+        }
 
-    // Phone number validation
-    if (!student.getPhone().matches("\\d{10}")) {
-        out.println("<h3>Error: Phone number must be exactly 10 digits.</h3>");
-        return;
-    }
+        // Password strength
+        if (!password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$")) {
+            renderResponse(out, false, "Password must be at least 8 characters, include uppercase, lowercase, number, and special character.");
+            return;
+        }
 
-    // Name & surname validation
-    if (!student.getName().matches("[A-Za-z]{1,30}")) {
-        out.println("<h3>Error: Name must only contain letters and be less than 30 characters.</h3>");
-        return;
-    }
+        // Phone number validation
+        if (!student.getPhone().matches("\\d{10}")) {
+            renderResponse(out, false, "Phone number must be exactly 10 digits.");
+            return;
+        }
 
-    if (!student.getSurname().matches("[A-Za-z]{1,30}")) {
-        out.println("<h3>Error: Surname must only contain letters and be less than 30 characters.</h3>");
-        return;
-    }
+        // Name & Surname validation
+        if (!student.getName().matches("[A-Za-z]{1,30}")) {
+            renderResponse(out, false, "Name must only contain letters and be less than 30 characters.");
+            return;
+        }
+
+        if (!student.getSurname().matches("[A-Za-z]{1,30}")) {
+            renderResponse(out, false, "Surname must only contain letters and be less than 30 characters.");
+            return;
+        }
+
         try (Connection conn = ConnectionProvider.getConnection()) {
             String hashedPassword = hashPassword(student.getPassword());
 
-            PreparedStatement check = conn.prepareStatement("SELECT * FROM \"users\" WHERE email = ?");
-            check.setString(1, student.getEmail());
-            ResultSet rs = check.executeQuery();
-
-            if (rs.next()) {
-                out.println("<h3>Email already exists!</h3>");
-            } else {
-                PreparedStatement ps = conn.prepareStatement(
-                        "INSERT INTO \"users\"(\"student_number\", name, surname, email, phone, password) VALUES (?, ?, ?, ?, ?, ?)");
-                ps.setString(1, student.getStudentNumber());
-                ps.setString(2, student.getName());
-                ps.setString(3, student.getSurname());
-                ps.setString(4, student.getEmail());
-                ps.setString(5, student.getPhone());
-                ps.setString(6, hashedPassword);
-                ps.executeUpdate();
-                out.println("<h3>Registration successful!</h3>");
+            // Check if email exists
+            PreparedStatement checkEmail = conn.prepareStatement("SELECT * FROM \"users\" WHERE email = ?");
+            checkEmail.setString(1, student.getEmail());
+            ResultSet rsEmail = checkEmail.executeQuery();
+            if (rsEmail.next()) {
+                renderResponse(out, false, "Email already exists!");
+                return;
             }
 
+            // Check if phone number exists
+            PreparedStatement checkPhone = conn.prepareStatement("SELECT * FROM \"users\" WHERE phone = ?");
+            checkPhone.setString(1, student.getPhone());
+            ResultSet rsPhone = checkPhone.executeQuery();
+            if (rsPhone.next()) {
+                renderResponse(out, false, "Phone number already exists!");
+                return;
+            }
+
+            // Insert the new user
+            PreparedStatement ps = conn.prepareStatement(
+                    "INSERT INTO \"users\"(\"student_number\", name, surname, email, phone, password) VALUES (?, ?, ?, ?, ?, ?)");
+            ps.setString(1, student.getStudentNumber());
+            ps.setString(2, student.getName());
+            ps.setString(3, student.getSurname());
+            ps.setString(4, student.getEmail());
+            ps.setString(5, student.getPhone());
+            ps.setString(6, hashedPassword);
+            ps.executeUpdate();
+
+            renderResponse(out, true, "Registration successful!");
+
         } catch (Exception e) {
-            out.println("<h3>Error: " + e.getMessage() + "</h3>");
+            String errorMsg = e.getMessage();
+            if (errorMsg != null && errorMsg.contains("users_pkey") && errorMsg.contains("student_number")) {
+                renderResponse(out, false, "A student with this student number already exists.");
+            } else {
+                renderResponse(out, false, "An unexpected error occurred. Please try again.");
+            }
         }
     }
 
@@ -89,5 +108,28 @@ public class RegisterServlet extends HttpServlet {
         StringBuilder hex = new StringBuilder();
         for (byte b : hash) hex.append(String.format("%02x", b));
         return hex.toString();
+    }
+
+    private void renderResponse(PrintWriter out, boolean isSuccess, String message) {
+        out.println("<!DOCTYPE html>");
+        out.println("<html><head><title>Registration</title><style>");
+        out.println("body { background: #0f2c43; font-family: 'Segoe UI', sans-serif; color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }");
+        out.println(".card { background: #1f3a52; padding: 40px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.25); text-align: center; width: 90%; max-width: 400px; }");
+        out.println(".card h1 { color: " + (isSuccess ? "#00ffc8" : "#ff4f4f") + "; margin-bottom: 20px; }");
+        out.println(".card p { margin-bottom: 20px; }");
+        out.println(".btn { padding: 10px 20px; border: none; border-radius: 6px; background: linear-gradient(90deg, "
+                + (isSuccess ? "#00ffc8, #00aaff" : "#ff4f4f, #ff8888")
+                + "); color: #000; font-weight: bold; text-decoration: none; display: inline-block; }");
+        out.println(".btn:hover { opacity: 0.9; }");
+        out.println("</style></head><body>");
+        out.println("<div class='card'>");
+        out.println("<h1>" + (isSuccess ? "Success!" : "Error!") + "</h1>");
+        out.println("<p>" + message + "</p>");
+        if (isSuccess) {
+            out.println("<a class='btn' href='login.jsp'>Go to Login</a>");
+        } else {
+            out.println("<a class='btn' href='register.jsp'>Back to Registration</a>");
+        }
+        out.println("</div></body></html>");
     }
 }

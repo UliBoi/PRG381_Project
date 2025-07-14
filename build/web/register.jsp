@@ -1,121 +1,158 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Register</title>
+    <meta charset="UTF-8">
+    <title>Register - Student Wellness</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f4f6f9;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            height: 100vh;
+            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            color: #fff;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .register-container {
-            background: #fff;
-            padding: 35px 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            width: 350px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            padding: 40px 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+            width: 90%;
+            max-width: 380px;
         }
 
         h2 {
             text-align: center;
             margin-bottom: 25px;
-            color: #333;
+            font-weight: 700;
+            font-size: 24px;
         }
 
         label {
             display: block;
             margin-bottom: 6px;
-            font-weight: 500;
-            color: #444;
+            font-size: 14px;
         }
 
         input[type="text"],
         input[type="email"],
         input[type="password"] {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-bottom: 18px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 14px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+
+        input::placeholder {
+            color: #ccc;
         }
 
         input[type="submit"] {
             width: 100%;
-            background-color: #28a745;
-            color: white;
             padding: 12px;
             border: none;
-            border-radius: 6px;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #00ffa3, #007bff);
+            color: white;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 700;
             cursor: pointer;
+            transition: background 0.4s ease;
         }
 
         input[type="submit"]:hover {
-            background-color: #218838;
+            background: linear-gradient(45deg, #007bff, #00ffa3);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
         }
 
         .back-link {
-            display: block;
             text-align: center;
             margin-top: 15px;
         }
 
         .back-link a {
-            color: #007bff;
+            color: #00e0ff;
             text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
         }
 
         .back-link a:hover {
             text-decoration: underline;
+            color: #fff;
+        }
+
+        @media (max-width: 420px) {
+            .register-container {
+                padding: 30px 20px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="register-container">
-        <h2>Register New Student</h2>
-        <form action="RegisterServlet" method="post">
-            <label>Student Number:</label>
-            <!-- Student Number -->
-            <input type="text" name="student_number" required minlength="6" maxlength="6" pattern="[0-9]+" title="Only numbers allowed, max 6 digits">
+<div class="register-container">
+    <h2><i class="fas fa-user-plus"></i> Register New Student</h2>
+    <form action="RegisterServlet" method="post">
+        <label>Student Number:</label>
+        <input type="text" name="student_number" required minlength="6" maxlength="6" pattern="[0-9]+" placeholder="123456" title="Only numbers allowed, max 6 digits">
 
-            <label>Name:</label>
-            <!-- Name -->
-            <input type="text" name="name" required maxlength="30" pattern="[A-Za-z]+" title="Only letters allowed">
+        <label>Name:</label>
+        <input type="text" name="name" required maxlength="30" pattern="[A-Za-z]+" placeholder="John" title="Only letters allowed">
 
-            <label>Surname:</label>
-            <!-- Surname -->
-            <input type="text" name="surname" required maxlength="30" pattern="[A-Za-z]+" title="Only letters allowed">
+        <label>Surname:</label>
+        <input type="text" name="surname" required maxlength="30" pattern="[A-Za-z]+" placeholder="Doe" title="Only letters allowed">
 
+        <label>Email:</label>
+        <input type="email" name="email" required pattern="[a-zA-Z0-9._%+-]+@gmail\.com" placeholder="you@gmail.com" title="Must be a valid Gmail address">
 
-            <label>Email:</label>
-            <!-- Email -->
-            <input type="email" name="email" required pattern="[a-zA-Z0-9._%+-]+@gmail\.com" title="Must be a valid Gmail address">
+        <label>Phone:</label>
+        <input type="text" name="phone" required pattern="[0-9]{10}" placeholder="0712345678" title="Enter a valid 10-digit phone number">
 
-            <label>Phone:</label>
-            <!-- Phone -->
-            <input type="text" name="phone" required pattern="[0-9]{10}" title="Enter a valid 10-digit phone number">
+        <label>Password:</label>
+        <input type="password" name="password" required minlength="8"
+               pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).+$"
+               placeholder="••••••••" title="At least 8 characters, including uppercase, lowercase, number, and symbol">
 
-
-            <label>Password:</label>
-            <!-- Password -->
-            <input type="password" name="password" required minlength="8"
-            pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).+$"
-            title="At least 8 characters, including uppercase, lowercase, number, and symbol">
-
-            <input type="submit" value="Register">
-        </form>
-        <div class="back-link">
-            <a href="index.jsp">← Back to Home</a>
-        </div>
+        <input type="submit" value="Register">
+    </form>
+    <div class="back-link">
+        <a href="index.jsp">← Back to Home</a>
     </div>
+</div>
 </body>
 </html>
+

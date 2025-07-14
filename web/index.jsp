@@ -190,7 +190,7 @@
     </a>
 
     <!-- Learn more link ---->
-    <a href="#" class="secondary-link"> Learn more about the platform</a>
+    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="secondary-link"> Learn more about the platform</a>
 </div>
 </body>
 </html>
