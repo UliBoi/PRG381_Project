@@ -16,7 +16,7 @@ This is a Java-based student wellness management system developed for the PRG381
 ## Group Member Role (Member 4 - Database Engineer & Integration)
 
 - Designed and created the `users` table with:
-  - `studentNumber`, `name`, `surname`, `email`, `phone`, `password`
+  - `student_number`, `name`, `surname`, `email`, `phone`, `password`
 - Added `NOT NULL` and `UNIQUE` constraints
 - Created an SQL initialization script for teammates
 - Connected PostgreSQL to Java servlets using JDBC
