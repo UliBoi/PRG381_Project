@@ -34,12 +34,11 @@ StudentWellnessSystem/
 
 1. Open in NetBeans
 2. Start Apache Tomcat
-3. Open `register.jsp` in browser
-4. Register a user, then log in via `login.jsp`
+3. Register a user via `register.jsp`, then log in via `login.jsp`
 
 ## SQL Initialization Script
 
-See `init_db.sql` (if provided) to create and populate the `users` table.
+To create the required database structure, run the `init_db.sql` file in pgAdmin or the SQL tool.
 
 ## Notes
 
