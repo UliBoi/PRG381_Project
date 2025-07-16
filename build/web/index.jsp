@@ -190,7 +190,7 @@
     </a>
 
     <!-- Learn more link ---->
-    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="secondary-link"> Learn more about the platform</a>
+    <a href="https://www.mentalhealth.org.uk/explore-mental-health" class="secondary-link"> Learn more about mental wellness</a>
 </div>
 </body>
 </html>
