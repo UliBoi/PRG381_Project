@@ -1,17 +1,21 @@
 <%@ page import="jakarta.servlet.http.*, jakarta.servlet.*" %>
 <%@ page session="true" %>
 <%
-    // Handle logout request
+    // Handle logout functionality
+    // If the request method is POST and the 'logout' parameter is present,
+    // invalidate the current session and redirect the user to the login page
     if ("POST".equalsIgnoreCase(request.getMethod()) && request.getParameter("logout") != null) {
-        session.invalidate();
-        response.sendRedirect("login.jsp");
+        session.invalidate(); // destroy session
+        response.sendRedirect("login.jsp"); // redirect to login
         return;
     }
 
     // Check if user is logged in
+    // Ensure user is authenticated before showing the dashboard
+    // If 'studentName' is not found in the session, redirect to login
     String name = (String) session.getAttribute("studentName");
     if (name == null) {
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("login.jsp");// redirect if session is invalid
         return;
     }
 %>
@@ -95,10 +99,13 @@
     </style>
 </head>
 <body>
+<!-- Main container showing student welcome message and logout option -->
 <div class="dashboard-container">
+    <!-- Display student name from session -->
     <h2><i class="fas fa-smile-wink"></i> Welcome, <%= name %>!</h2>
     <p>This is your student dashboard.</p>
-
+    
+    <!-- Logout form sends POST request when user clicks Logout -->
     <form method="post">
         <input type="hidden" name="logout" value="true">
         <button type="submit" class="logout-button">Logout</button>

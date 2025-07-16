@@ -126,29 +126,39 @@
 <body>
 <div class="register-container">
     <h2><i class="fas fa-user-plus"></i> Register New Student</h2>
+    
+    <!-- Registration form POSTs to RegisterServlet -->
     <form action="RegisterServlet" method="post">
+        <!-- Student Number (must be 6 digits) -->
         <label>Student Number:</label>
         <input type="text" name="student_number" required minlength="6" maxlength="6" pattern="[0-9]+" placeholder="123456" title="Only numbers allowed, max 6 digits">
-
+        
+        <!-- First Name (letters only) -->
         <label>Name:</label>
         <input type="text" name="name" required maxlength="30" pattern="[A-Za-z]+" placeholder="John" title="Only letters allowed">
-
+        
+        <!-- Last Name (letters only) -->
         <label>Surname:</label>
         <input type="text" name="surname" required maxlength="30" pattern="[A-Za-z]+" placeholder="Doe" title="Only letters allowed">
 
+        <!-- Email (must be Gmail) -->
         <label>Email:</label>
         <input type="email" name="email" required pattern="[a-zA-Z0-9._%+-]+@gmail\.com" placeholder="you@gmail.com" title="Must be a valid Gmail address">
-
+        
+        <!-- Phone Number (10-digit numeric) -->
         <label>Phone:</label>
         <input type="text" name="phone" required pattern="[0-9]{10}" placeholder="0712345678" title="Enter a valid 10-digit phone number">
-
+        
+        <!-- Password (must be strong) -->
         <label>Password:</label>
         <input type="password" name="password" required minlength="8"
                pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).+$"
                placeholder="••••••••" title="At least 8 characters, including uppercase, lowercase, number, and symbol">
-
+        
+        <!-- Submit Button -->
         <input type="submit" value="Register">
     </form>
+    <!-- Navigation link -->
     <div class="back-link">
         <a href="index.jsp">← Back to Home</a>
     </div>

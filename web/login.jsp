@@ -132,19 +132,27 @@
 </head>
 <body>
 <div class="login-container">
+    <!-- Title heading with optional icon -->
     <h2><i class="fas fa-user-circle icon-btn"></i> User Login</h2>
+    
+     <!-- Login form submits to LoginServlet for processing -->
     <form action="LoginServlet" method="post">
+        <!-- Email input -->
         <label for="email">Email</label>
         <input placeholder="you@example.com" type="email" id="email" name="email" required>
-
+        
+        <!-- Password input -->
         <label for="password">Password</label>
         <input type="password" id="password" name="password" required>
-
+        
+        <!-- Submit button -->
         <input type="submit" value="Login">
     </form>
+     <!-- Link to register page -->
     <div class="register-link">
         <a href="register.jsp">Don’t have an account? Register</a>
     </div>
+     <!-- Link back to home page -->
     <div class="home-link">
         <a href="index.jsp">← Back to Home</a>
     </div>
