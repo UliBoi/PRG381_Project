@@ -141,9 +141,9 @@
         <label>Surname:</label>
         <input type="text" name="surname" required maxlength="30" pattern="[A-Za-z]+" placeholder="Doe" title="Only letters allowed">
 
-        <!-- Email (must be Gmail) -->
+        <!-- Email (must be valid type of email address) -->
         <label>Email:</label>
-        <input type="email" name="email" required pattern="[a-zA-Z0-9._%+-]+@gmail\.com" placeholder="you@gmail.com" title="Must be a valid Gmail address">
+        <input type="email" name="email" required pattern="[a-zA-Z0-9._%+-]+@(gmail|outlook|yahoo|icloud)\.com" placeholder="you@gmail.com" title="Only Gmail, Outlook, Yahoo, or iCloud addresses are allowed">
         
         <!-- Phone Number (10-digit numeric) -->
         <label>Phone:</label>
