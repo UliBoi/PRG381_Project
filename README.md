@@ -1,47 +1,76 @@
-# PRG381_Project
+# Student Wellness System – Milestone 1 (Web Version)
 
-# Student Wellness System (PRG381 Project)
+This is a Java-based web application developed for the **PRG381 module** at Belgium Campus. It focuses on implementing a student wellness portal using **JSP**, **Servlets**, and **PostgreSQL**. The application enables student registration, login, and dashboard interaction with secure session handling.
 
-This is a Java-based student wellness management system developed for the PRG381 module at Belgium Campus.
+---
 
 ## Technologies Used
 
-- **Java (JSP & Servlets)**
-- **PostgreSQL** (Database)
-- **JDBC** (Database Connectivity)
-- **Apache NetBeans** (IDE)
-- **Apache Tomcat** (Web Server)
-- **GitHub** (Version Control)
+| Technology        | Description                            |
+|-------------------|----------------------------------------|
+| Java (JSP + Servlets) | Backend logic & web routing         |
+| PostgreSQL         | Relational database for student data  |
+| JDBC               | Database connectivity layer           |
+| Apache Tomcat      | Web server for JSP & Servlets         |
+| NetBeans           | IDE used to develop and run project   |
+| GitHub             | Version control                       |
 
-## Group Member Role (Member 4 - Database Engineer & Integration)
+---
 
-- Designed and created the `users` table with:
-  - `student_number`, `name`, `surname`, `email`, `phone`, `password`
-- Added `NOT NULL` and `UNIQUE` constraints
-- Created an SQL initialization script for teammates
-- Connected PostgreSQL to Java servlets using JDBC
-- Verified registration and login flow from frontend to backend
-
-## Folder Structure
+## Folder Structure (Milestone 1)
 StudentWellnessSystem/
-├── src/ # Java source code
-├── web/ # JSP pages (register.jsp, login.jsp, dashboard.jsp)
-├── nbproject/ # NetBeans project config
-├── build/ # Ignored build files
-├── README.md # Project overview
+├── build/ # Compiled classes
+├── dist/ # Project distribution
+├── nbproject/ # NetBeans configuration
+├── src/ # Java Servlets (e.g., LoginServlet.java)
+├── web/ # JSP files (login.jsp, register.jsp, dashboard.jsp)
+├── init_db.sql # SQL to initialize user table in PostgreSQL
+├── postgresql-*.jar # JDBC driver for PostgreSQL
+├── README.md # This file
 
+---
 ## How to Run
 
-1. Open in NetBeans
-2. Start Apache Tomcat
-3. Register a user via `register.jsp`, then log in via `login.jsp`
+1. Open the project in **NetBeans**.
+2. Ensure PostgreSQL is running and database is created.
+3. Run `init_db.sql` in **pgAdmin** to create the `users` table.
+4. Add JDBC driver to project (`postgresql-*.jar`).
+5. Deploy on **Apache Tomcat** via NetBeans.
+6. Visit:
+   - `http://localhost:8080/StudentWellnessSystem/register.jsp` to register
+   - `http://localhost:8080/StudentWellnessSystem/login.jsp` to log in
+
+---
 
 ## SQL Initialization Script
 
 To create the required database structure, run the `init_db.sql` file in pgAdmin or the SQL tool.
 
+## Security Features
+
+- Passwords are hashed using SHA-256
+- Validations on email format and phone input
+- Session-based login control with dashboard access
+- Redirection to `login.jsp` if not authenticated
+
+---
+
 ## Notes
 
-- Follows MVC architecture
-- Passwords are hashed with SHA-256
-- Session-based login with redirect to dashboard
+- Follows a basic **MVC** structure:  
+  - Model: `User.java`  
+  - View: `*.jsp`  
+  - Controller: `*.Servlet` classes
+- The application is lightweight and focused on core login + dashboard flow.
+- Milestone 2 transitions the same concept into a **desktop Swing + JavaDB** version.
+
+---
+
+## Contributors
+Group Member 1: Rodney Mlostshwa 600439 - JSP Frontend Developer
+
+Group Member 2: Neo Polori 600508 - Register Servlet & Validation
+
+Group Member 3: Gordon Mullin 600248 - Login Servlet & Session
+
+Group Member 4: Ulrigh Oosthuizen 577952 - Database Engineer & Integration
